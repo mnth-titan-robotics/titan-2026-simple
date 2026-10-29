@@ -1,0 +1,15 @@
+{
+    // Use the project's own Python (created by the "Robot: Setup" task).
+    // macOS / Linux: VS Code finds .venv on its own.
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe",
+    "pylint.severity": {
+        "convention": "Information",
+        "error": "Error",
+        "fatal": "Error",
+        "refactor": "Hint",
+        "warning": "Warning",
+        "info": "Information"
+    },
+    "pylint.args": ["--max-line-length=120"],
+    "python.linting.pep8Args": ["--max-line-length=120"]
+}

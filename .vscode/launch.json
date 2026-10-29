@@ -1,0 +1,44 @@
+{
+  // These appear in the Run and Debug panel (the play button with a bug on the
+  // left side of VS Code). Pick one from the dropdown and press the green
+  // arrow, or press F5. "Robot: Setup" runs first, so .venv is always ready.
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Simulate",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "robotpy",
+      "args": ["sim"],
+      "cwd": "${workspaceFolder}",
+      "python": "${workspaceFolder}/.venv/bin/python",
+      "windows": { "python": "${workspaceFolder}/.venv/Scripts/python.exe" },
+      "preLaunchTask": "Robot: Setup",
+      "justMyCode": false
+    },
+    {
+      "name": "Test",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "robotpy",
+      "args": ["test", "--isolated", "--", "-v", "-s", "--exitfirst"],
+      "cwd": "${workspaceFolder}",
+      "python": "${workspaceFolder}/.venv/bin/python",
+      "windows": { "python": "${workspaceFolder}/.venv/Scripts/python.exe" },
+      "preLaunchTask": "Robot: Setup",
+      "justMyCode": false
+    },
+    {
+      "name": "Deploy",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "robotpy",
+      "args": ["deploy", "--skip-tests", "--ignore-image-version"],
+      "cwd": "${workspaceFolder}",
+      "python": "${workspaceFolder}/.venv/bin/python",
+      "windows": { "python": "${workspaceFolder}/.venv/Scripts/python.exe" },
+      "preLaunchTask": "Robot: Setup",
+      "console": "integratedTerminal"
+    }
+  ]
+}

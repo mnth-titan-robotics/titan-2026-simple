@@ -1,0 +1,59 @@
+{
+  // Every task runs .vscode/scripts/robot_tasks.py, which creates the .venv
+  // folder and installs the robot libraries first if needed. Run these from
+  // the "Terminal > Run Task..." menu, or use the Run and Debug panel.
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Robot: Setup",
+      "detail": "Create .venv and install the robot libraries (runs automatically when the folder opens)",
+      "type": "process",
+      "command": "python3",
+      "args": [".vscode/scripts/robot_tasks.py", "setup"],
+      "windows": {
+        "command": "py",
+        "args": ["-3", ".vscode/scripts/robot_tasks.py", "setup"]
+      },
+      "runOptions": { "runOn": "folderOpen" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Robot: Simulate",
+      "detail": "Run the robot code in the simulator",
+      "type": "process",
+      "command": "python3",
+      "args": [".vscode/scripts/robot_tasks.py", "sim"],
+      "windows": {
+        "command": "py",
+        "args": ["-3", ".vscode/scripts/robot_tasks.py", "sim"]
+      },
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Robot: Test",
+      "detail": "Check that the robot code starts without crashing",
+      "type": "process",
+      "command": "python3",
+      "args": [".vscode/scripts/robot_tasks.py", "test"],
+      "windows": {
+        "command": "py",
+        "args": ["-3", ".vscode/scripts/robot_tasks.py", "test"]
+      },
+      "group": { "kind": "test", "isDefault": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Robot: Deploy",
+      "detail": "Send the robot code to the roboRIO",
+      "type": "process",
+      "command": "python3",
+      "args": [".vscode/scripts/robot_tasks.py", "deploy"],
+      "windows": {
+        "command": "py",
+        "args": ["-3", ".vscode/scripts/robot_tasks.py", "deploy"]
+      },
+      "problemMatcher": []
+    }
+  ]
+}
