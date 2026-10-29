@@ -74,7 +74,7 @@ class PhysicsEngine:
         # The launcher flywheel speeds up toward whatever speed was asked for,
         # taking a little over a second to get from stopped to full speed
         self._launcherSim = SparkMaxSim(robot.launcher_motor, DCMotor.NEO(2))
-        self._launcherRateLimiter = SlewRateLimiter(3.0)
+        self._launcherRateLimiter = SlewRateLimiter(3000)  # RPM per second
 
     def update_sim(self, now: float, tm_diff: float) -> None:
         vbus = RobotController.getBatteryVoltage()

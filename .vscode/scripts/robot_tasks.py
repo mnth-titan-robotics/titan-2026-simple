@@ -26,6 +26,7 @@ from pathlib import Path
 PROJECT_DIR = Path(__file__).resolve().parents[2]
 VENV_DIR = PROJECT_DIR / ".venv"
 PYPROJECT = PROJECT_DIR / "pyproject.toml"
+WPILIB_PREFERENCES = PROJECT_DIR / ".wpilib" / "wpilib_preferences.json"
 # Records which pyproject.toml the environment was last set up from
 SETUP_STAMP = VENV_DIR / ".robot-setup-stamp"
 
@@ -61,6 +62,20 @@ def read_requirements(pyproject_text):
     return [robotpy, *settings.get("requires", [])]
 
 
+def remove_bom(path):
+    """
+    Some editors save files as "UTF-8 with BOM", adding three invisible bytes to the start.
+    robotpy can't read wpilib_preferences.json (the team number) when they are there,
+    so deploy would fail.
+    """
+    if not path.exists():
+        return
+    contents = path.read_bytes()
+    if contents.startswith(b"\xef\xbb\xbf"):
+        path.write_bytes(contents[3:])
+        print(f"Removed the UTF-8 BOM from {path.relative_to(PROJECT_DIR)}", flush=True)
+
+
 def ensure_environment():
     """Creates .venv and installs the robot libraries, if that hasn't been done yet."""
     pyproject_text = PYPROJECT.read_text(encoding="utf-8")
@@ -89,6 +104,7 @@ def main():
     if len(sys.argv) != 2 or sys.argv[1] not in COMMANDS:
         sys.exit(f"Usage: robot_tasks.py [{' | '.join(COMMANDS)}]")
 
+    remove_bom(WPILIB_PREFERENCES)
     ensure_environment()
 
     robotpy_args = COMMANDS[sys.argv[1]]

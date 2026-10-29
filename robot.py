@@ -16,12 +16,13 @@
 # After importing, we use the module's name followed by a dot to reach the
 # things inside it, like wpilib.XboxController or rev.SparkMax.
 
-import wpilib    # The main FRC library: controllers, timing, the dashboard
-import wpimath   # Math helpers made for robots
-import rev       # Code for REV Robotics motor controllers (SPARK MAX)
+import wpilib
+import wpimath
+import rev
 
 # swerve_drive.py is a file in THIS project. We import it the same way.
-# Open it if you're curious, but you don't need to change it.
+# Open it if you're curious, but you don't need to change it or understand
+# it to use it.
 from swerve_drive import SwerveDrive
 
 
@@ -59,8 +60,8 @@ INDEXER_SPEED = 0.9
 INDEXER_REVERSE_SPEED = -0.9
 
 # The launcher is different: instead of a power level, we ask for an exact
-# flywheel speed (in thousands of RPM) and the motor controller holds it there.
-LAUNCHER_SPEED = 3.3
+# flywheel speed (in RPM) and the motor controller holds it there.
+LAUNCHER_SPEED = 3300
 
 # The launcher counts as "ready" once it reaches this fraction of LAUNCHER_SPEED
 LAUNCHER_READY_PERCENT = 0.9
@@ -75,8 +76,8 @@ LAUNCHER_READY_PERCENT = 0.9
 
 def apply_settings(motor, settings):
     """Sends a group of settings to a motor controller."""
-    # ResetMode clears out any old settings first, so the motor starts fresh.
-    # PersistMode saves the settings so they survive a power cycle.
+    # kResetSafeParameters clears out any old settings first, so the motor starts fresh.
+    # kPersistParameters saves the settings so they survive a power cycle.
     motor.configure(
         settings,
         rev.ResetMode.kResetSafeParameters,
@@ -157,10 +158,10 @@ class Robot(wpilib.TimedRobot):
         # The motor controller holds a steady speed on its own:
         # - feedforward (kV) supplies the volts needed for each unit of speed
         # - PID adds extra power when a ball slows the flywheel down
-        launcher_settings.closedLoop.pid(0.33, 0.0, 0.0)
-        launcher_settings.closedLoop.feedForward.kV(3.6)  # volts per thousand RPM
-        # Convert motor RPM into flywheel speed in thousands of RPM (1.5:1 gearing)
-        launcher_settings.encoder.velocityConversionFactor(1.0 / 1000.0 / 1.5)
+        launcher_settings.closedLoop.pid(0.00033, 0.0, 0.0)
+        launcher_settings.closedLoop.feedForward.kV(0.0036)  # volts per RPM
+        # Convert motor RPM into flywheel RPM (1.5:1 gearing)
+        launcher_settings.encoder.velocityConversionFactor(1.0 / 1.5)
         apply_settings(self.launcher_motor, launcher_settings)
         launcher_settings.follow(LAUNCHER_LEFT_MOTOR_ID, True)
         apply_settings(launcher_follower, launcher_settings)

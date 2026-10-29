@@ -1,15 +1,25 @@
 {
-    // Use the project's own Python (created by the "Robot: Setup" task).
-    // macOS / Linux: VS Code finds .venv on its own.
-    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe",
-    "pylint.severity": {
-        "convention": "Information",
-        "error": "Error",
-        "fatal": "Error",
-        "refactor": "Hint",
-        "warning": "Warning",
-        "info": "Information"
-    },
-    "pylint.args": ["--max-line-length=120"],
-    "python.linting.pep8Args": ["--max-line-length=120"]
+  // Use the project's own Python (created by the "Robot: Setup" task).
+  // macOS / Linux: VS Code finds .venv on its own.
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe",
+
+  // Tidy files on save. Whitespace rules come from .editorconfig;
+  // Python code is formatted with autopep8, using the same 120 character lines.
+  "editor.formatOnSave": true,
+  "files.encoding": "utf8",
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.autopep8"
+  },
+  "autopep8.args": ["--max-line-length=120"],
+
+  "pylint.severity": {
+    "convention": "Information",
+    "error": "Error",
+    "fatal": "Error",
+    "refactor": "Hint",
+    "warning": "Warning",
+    "info": "Information"
+  },
+  "pylint.args": ["--max-line-length=120"],
+  "python.linting.pep8Args": ["--max-line-length=120"]
 }
